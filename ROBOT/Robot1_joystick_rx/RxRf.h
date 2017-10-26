@@ -6,10 +6,6 @@
 #include <RF24.h>
 
 
-#include <SPI.h>
-#include <nRF24L01.h>
-#include <RF24.h>
-
 typedef struct{
   int x;
   int y;

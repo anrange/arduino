@@ -9,16 +9,32 @@
 #define Motor_h
 
 #include "Arduino.h"
-
-class Joystick
+#include "RxRf.h"
+#define STOP 0
+#define FWD 1
+#define BWD 2
+#define LEFT 3
+#define RIGHT 4
+#define LOWRANGE 300
+#define HIGHRANGE 700
+class DualMotor
 {
   public:
-    Joystick(int swx,int swy, int swbutton);
+    DualMotor(int en1,int dira1, int dira2, int en2, int dirb1, int dirb2);
     void begin();
-    void read();
-    int posx, posy,button;
+    void move(Point p);
+    void moveMotor(int m, bool en, bool dir);
+    void moveFwd();
+    void moveBack();
+    void moveLeft();
+    void moveRight();
+    void stopMotor();
+    void rotateRight();
+    void rotateLeft();
+    Point p;
+    
   private:
-    int _swx,_swy,_swbutton;
+    int en1,en2, dira1, dira2, dirb1, dirb2;
 };
 
 #endif
