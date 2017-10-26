@@ -55,12 +55,14 @@ void loop() {
 }
 
 void sendData(){
-  Serial.println("Sending X");
-  send(radio, joystick.posx, ackData);
-  Serial.println("Sending Y");
-  send(radio, joystick.posy, ackData);
-  Serial.println("Sending Button");
-  send(radio, joystick.button, ackData);
+  Serial.println("Sending X-Y-Z");
+  Point data;
+  data.x = joystick.posx;
+  data.y = joystick.posy;
+  data.b = joystick.button;
+  
+  send(radio, data, 3, ackData);
+  
   
 }
 

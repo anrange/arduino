@@ -25,15 +25,20 @@ void radioSetup(RF24 radio, byte* rfAddress, char * ackData, int channel=108, bo
 
 
 //====================
-void send(RF24 radio, int data, char *ackData) {
+void send(RF24 radio, Point data,int dataLength, char *ackData) {
 
     bool rslt;
-    rslt = radio.write( &data, sizeof(data) );
+    rslt = radio.write( &data, sizeof(Point) );
       // Always use sizeof() as it gives the size as the number of bytes.
       // For example if dataToSend was an int sizeof() would correctly return 2
 
     Serial.print("Sent:");
-    Serial.print(data);
+    Serial.print(data.x);
+    Serial.print("-");
+    Serial.print(data.y);
+    Serial.print("-");
+    Serial.print(data.b);
+    Serial.println("*****");
     if (rslt) {
       if ( radio.isAckPayloadAvailable() ) {
               radio.read(&ackData, sizeof(ackData));
