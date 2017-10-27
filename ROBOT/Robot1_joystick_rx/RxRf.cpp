@@ -5,7 +5,7 @@
 #include <RF24.h>
 
 #include "Arduino.h"
-
+#include "RxRf.h"
 
 void radioSetup(RF24 radio, byte* rfAddress, char * ackData, int channel=108, bool enableAck=true, int retry_count=5, int retry_delay=3) {
 

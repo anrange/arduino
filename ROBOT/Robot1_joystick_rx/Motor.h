@@ -9,7 +9,7 @@
 #define Motor_h
 
 #include "Arduino.h"
-#include "RxRf.h"
+
 #define STOP 0
 #define FWD 1
 #define BWD 2
@@ -22,7 +22,8 @@ class DualMotor
   public:
     DualMotor(int en1,int dira1, int dira2, int en2, int dirb1, int dirb2);
     void begin();
-    void move(Point p);
+    void move(int x, int y);
+    void move();
     void moveMotor(int m, bool en, bool dir);
     void moveFwd();
     void moveBack();
@@ -31,7 +32,7 @@ class DualMotor
     void stopMotor();
     void rotateRight();
     void rotateLeft();
-    Point p;
+    int x,y;
     
   private:
     int en1,en2, dira1, dira2, dirb1, dirb2;

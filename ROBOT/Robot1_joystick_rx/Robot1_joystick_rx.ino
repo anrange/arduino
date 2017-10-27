@@ -14,28 +14,31 @@
 #define CE_PIN 9
 #define CSN_PIN 10
 
-RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
+#define EN1 3                                   
+#define DIRA_1 2
+#define DIRA_2 4
 
+#define EN2 6
+#define DIRB_1 8
+#define DIRB_2 7
+
+
+RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
 char ackData[10] = "123456789"; // to hold the two values coming from the slave
 bool newData = false;
 char dataReceived[12];
-int pos[3];
 
 
 const byte slaveAddress[5] = {'T','x','N','I','C'};
 
-#define SWX A0
-#define SWY A1
-#define SWBUTTON  8
-
-
+DualMotor motor(EN1,DIRA_1, DIRA_2, EN2, DIRB_1, DIRB_2);
 
 void setup() {
  
   Serial.begin(9600);
   Serial.println("Joystick 1");
   radioSetup(radio, slaveAddress, ackData);
-
+  motor.begin();
 }
 
 
@@ -44,9 +47,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   readData();
-  readData();
-  readData();
-  delay(500);
+//  delay(100);
+//  readData();
+  
 }
 
 void readData(){
@@ -59,10 +62,12 @@ void readData(){
       Serial.print(_point.y); 
       Serial.print(" - "); 
       Serial.print(_point.b); 
-      Serial.print(" - "); 
+      Serial.print(" - ");
+      motor.move(_point.x, _point.y);
   }
   else{
-    Serial.print(" Didn't receive "); 
+    Serial.print(" Didn't receive ");
+    //motor.move(); 
   }
   Serial.println(" ******** "); 
 }

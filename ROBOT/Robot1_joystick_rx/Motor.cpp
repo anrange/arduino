@@ -20,6 +20,9 @@ DualMotor::DualMotor(int enable1,int ma1, int ma2, int enable2, int mb1, int mb2
   dirb1 = mb1;
   dira2 = ma2;
   dirb2 = mb2;
+
+  x = 514;
+  y = 500;
 }
 
 void DualMotor::begin(){
@@ -33,33 +36,37 @@ void DualMotor::begin(){
 }
 
 
-
-void DualMotor::move(Point point){
-  p.x = point.x;
-  p.y = point.y;
-  p.b = point.b;
+void DualMotor::move(){
+   move(x,y);
+}
+void DualMotor::move(int _x, int _y){
+  x = _x;
+  y = _y;
+  
 
   int direction = STOP;
-  if ((p.x >LOWRANGE && p.x < HIGHRANGE) && (p.y >LOWRANGE && p.y < HIGHRANGE)){
+  if ((x >LOWRANGE && x < HIGHRANGE) && (y >LOWRANGE && y < HIGHRANGE)){
     stopMotor();
     Serial.println("Stoping motor");
+    return;
   }
 
-  if (p.x >LOWRANGE && p.x < HIGHRANGE){
+  if (x >LOWRANGE && x < HIGHRANGE){
     //x is stop
-    if (p.y >= HIGHRANGE){
+    if (y <= LOWRANGE){
       moveFwd();
-      Serial.println("FWD");
+      Serial.println("FWD");     
     }
     else{
       moveBack();
       Serial.println("BACK");
     }
+    return;
   }
 
-  if (p.y >LOWRANGE && p.y < HIGHRANGE){
+  if (y >LOWRANGE && y < HIGHRANGE){
     //y is stop (left or right
-    if (p.x <= LOWRANGE){
+    if (x <= LOWRANGE){
       rotateRight();
       Serial.println("RIGHT");
     }
@@ -71,15 +78,14 @@ void DualMotor::move(Point point){
   else{
 //both are in the range
      //move them in place
-     if (p.x <= LOWRANGE){
+     if (x <= LOWRANGE){
           moveLeft();
           Serial.println("LEFT");
      }
      else{
         moveRight();
         Serial.println("RIGHT");
-     }
-      
+     }     
  }
 }
 
