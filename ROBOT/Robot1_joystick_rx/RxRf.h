@@ -1,5 +1,5 @@
 #ifndef RxRf_h
-#define RxRf_f
+#define RxRf_h
 
 #include <SPI.h>
 #include <nRF24L01.h>
