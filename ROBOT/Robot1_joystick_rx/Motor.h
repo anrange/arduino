@@ -9,6 +9,8 @@
 #define Motor_h
 
 #include "Arduino.h"
+#include "RxRf.h"
+#include "UltraSound.h"
 
 #define STOP 0
 #define FWD 1
@@ -17,13 +19,15 @@
 #define RIGHT 4
 #define LOWRANGE 300
 #define HIGHRANGE 700
+
 class DualMotor
 {
   public:
-    DualMotor(int en1,int dira1, int dira2, int en2, int dirb1, int dirb2);
+    DualMotor(int en1,int dira1, int dira2, int en2, int dirb1, int dirb2, int trigger_pin, int echo_pin);
     void begin();
     void move(int x, int y);
     void move();
+    void move(Point p);
     void moveMotor(int m, bool en, bool dir);
     void moveFwd();
     void moveBack();
@@ -33,9 +37,11 @@ class DualMotor
     void rotateRight();
     void rotateLeft();
     int x,y;
+    UltraSound* proximitySensor;
     
   private:
     int en1,en2, dira1, dira2, dirb1, dirb2;
+    
 };
 
 #endif

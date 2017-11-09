@@ -12,7 +12,12 @@ typedef struct{
   int b;
 }Point;
 
-void radioSetup(RF24 radio, byte* rfAddress, char * ackData, int channel=108, bool enableAck=true, int retry_count=5, int retry_delay=3);
+
+void radioSetup(RF24 radio, const byte* rfAddress, char* ackData, int channel, bool enableAck, int retry_count, int retry_delay);
+
 int getData(RF24 radio, char * ackData, Point *data, boolean enableAck=true);
+
+void radioSetup(RF24 radio, const byte* rfAddress, char* ackData);
+
 
 #endif

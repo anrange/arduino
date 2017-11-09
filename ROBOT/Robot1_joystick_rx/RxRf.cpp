@@ -7,7 +7,12 @@
 #include "Arduino.h"
 #include "RxRf.h"
 
-void radioSetup(RF24 radio, byte* rfAddress, char * ackData, int channel=108, bool enableAck=true, int retry_count=5, int retry_delay=3) {
+
+void radioSetup(RF24 radio, const byte* rfAddress, char* ackData){
+	radioSetup(radio, rfAddress, ackData, 108, true, 5, 3);
+}
+
+void radioSetup(RF24 radio, const byte* rfAddress, char* ackData, int channel, bool enableAck, int retry_count, int retry_delay) {
 
     radio.begin();
     radio.setChannel(channel);
@@ -26,7 +31,7 @@ void radioSetup(RF24 radio, byte* rfAddress, char * ackData, int channel=108, bo
 
 
 //====================
-int getData(RF24 radio, char * ackData,Point* dataReceived,  boolean enableAck=true) {
+int getData(RF24 radio, char* ackData,Point* dataReceived,  boolean enableAck) {
     if ( radio.available() ) {
         radio.read( dataReceived, sizeof(Point) );
 //        Serial.print(dataReceived.x);

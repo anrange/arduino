@@ -12,14 +12,16 @@
 //http://howtomechatronics.com/tutorials/arduino/arduino-dc-motor-control-tutorial-l298n-pwm-h-bridge/
 
 
-
-DualMotor::DualMotor(int enable1,int ma1, int ma2, int enable2, int mb1, int mb2){
+DualMotor::DualMotor(int enable1,int ma1, int ma2, int enable2, int mb1, int mb2, int trigger_pin, int echo_pin){
   en1 = enable1;
   en2 = enable2;
   dira1 = ma1;
   dirb1 = mb1;
   dira2 = ma2;
   dirb2 = mb2;
+
+  //proximity sensor
+  proximitySensor = new UltraSound(trigger_pin, echo_pin);
 
   x = 514;
   y = 500;
@@ -33,9 +35,14 @@ void DualMotor::begin(){
   pinMode(dirb1, OUTPUT);
   pinMode(dirb2, OUTPUT);
 
+  proximitySensor->begin();
+
 }
 
 
+void DualMotor::move(Point p){
+   move(p.x,p.y);
+}
 void DualMotor::move(){
    move(x,y);
 }
@@ -91,8 +98,14 @@ void DualMotor::move(int _x, int _y){
 
 void DualMotor::moveFwd(){
   //both motors should move forward
-   moveMotor(1,true, true);
-   moveMotor(2,true, true);
+  if(proximitySensor->isThereObstacle()==false){
+     moveMotor(1,true, true);
+     moveMotor(2,true, true);
+  }
+  else{
+    //stop
+    stopMotor();
+  }
 }
 
 void DualMotor::moveBack(){
@@ -119,18 +132,28 @@ void DualMotor::rotateRight(){
 }
 
 void DualMotor::moveLeft(){
-  //m1 should move forward
-   moveMotor(1,true, true);
-  //m2 should stop
-   moveMotor(2,false, false);
+  if(!proximitySensor->isThereObstacle()){
+    //m1 should move forward
+     moveMotor(1,true, true);
+    //m2 should stop
+     moveMotor(2,false, false);
+  }
+  else{
+    stopMotor();
+  }
   
 }
 
 void DualMotor::moveRight(){
-  //m1 should stop
-   moveMotor(1,false, false);
-  //m2 should move forward
-   moveMotor(2,true, true);
+  if(!proximitySensor->isThereObstacle()){
+    //m1 should stop
+     moveMotor(1,false, false);
+    //m2 should move forward
+     moveMotor(2,true, true);
+  }
+  else{
+    stopMotor();
+  }
 }
 
 void DualMotor::stopMotor(){
@@ -158,7 +181,7 @@ void DualMotor::moveMotor(int m, bool en, bool dir){
     digitalWrite(_en, HIGH);
     if (dir){ //fwd . 
       digitalWrite(ma, HIGH);
-      digitalWrite(mb, LOW);  
+      digitalWrite(mb, LOW); 
     }
     else{ //back
       digitalWrite(ma, LOW);
@@ -171,6 +194,7 @@ void DualMotor::moveMotor(int m, bool en, bool dir){
     digitalWrite(mb, LOW);
   }
 }
+
 
 
 

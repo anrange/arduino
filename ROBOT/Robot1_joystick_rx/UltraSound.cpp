@@ -4,7 +4,7 @@
 UltraSound::UltraSound(int trig,int _echo){
   trigger = trig;
   echo = _echo;
-  OBSTACLE_LIMIT = 100;
+  
 }
 
 void UltraSound::begin(){
@@ -29,7 +29,7 @@ long UltraSound::readDistance(){
     
 boolean UltraSound::isThereObstacle(){
   long dist = readDistance();
-  return dist < OBSTACLE_LIMIT ; 
+  return (dist < OBSTACLE_LIMIT) ; 
 }
     
 

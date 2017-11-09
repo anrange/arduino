@@ -11,7 +11,7 @@ class UltraSound
     long readDistance();
     boolean isThereObstacle();
     int trigger,echo;
-    long OBSTACLE_LIMIT;
+    long OBSTACLE_LIMIT = 400;
 
 };
 #endif
