@@ -47,33 +47,35 @@ void MultiLED::writeEmptySegment(byte segment)
  * Write a number to the 4 digit display.
  * Starts from left to right
  */
-void MultiLED::writeNumber(int num){
-  if(num != number){
-    int unit=-1, tenth=-1, hundreds=-1,decimal=-1;
-    number = num;
-    unit = number % 10;
-    if (number > 10){
-      tenth = ((number / 10) % 10);
-      if (number >= 100){
-        hundreds = ((number / 100) % 10);
-      }
-    }
+void MultiLED::writeNumber(int number){
     
-    writeDigitToSegment(2, unit);
-    delay(10);
-    writeDigitToSegment(1, tenth);
-//    if(tenth == -1){
-//      writeEmptySegment(1);
-//    }
-//    else{
-//      writeDigitToSegment(1, tenth);
-//    }
-  //  if(hundreds == -1){
-  //    writeEmptySegment(0);
-  //  }else{
-  //    writeDigitToSegment(0, hundreds);
-  //  }
-   }
+  int unit=-1, tenth=-1, hundreds=-1,decimal=-1;
+  _value = number;
+  unit = number % 10;
+  if (number >= 10){
+    tenth = ((number / 10) % 10);
+    if (number >= 100){
+      hundreds = ((number / 100) % 10);
+    }
+  }
+  
+  if(unit == -1){
+    writeEmptySegment(UNITS);
+  }
+  else{
+    writeDigitToSegment(UNITS, unit);
+  }
+  if(tenth == -1){
+    writeEmptySegment(TENTHS);
+  }
+  else{
+    writeDigitToSegment(TENTHS, tenth);
+  }
+  if(hundreds == -1){
+    writeEmptySegment(HUNDREDS);
+  }else{
+    writeDigitToSegment(HUNDREDS, hundreds);
+  }
   
 }
 

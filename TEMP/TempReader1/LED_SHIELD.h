@@ -8,9 +8,14 @@
 #include "Arduino.h"
 /* Segment byte maps for numbers 0 to 9 */
 const byte SEGMENT_MAP[] = {0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0X80,0X90};
-const byte SEGMENT_EMPTY = 0x00;
+const byte SEGMENT_EMPTY = 0xFF;
 /* Byte maps to select digit 1 to 4 */
 const byte SEGMENT_SELECT[] = {0xF1,0xF2,0xF4,0xF8};
+#define UNITS 3
+#define TENTHS 2
+#define HUNDREDS 1
+#define THOUSANDS 0
+
 #include "Arduino.h"
 
 class MultiLED
@@ -25,6 +30,7 @@ class MultiLED
      
   private:
      int latch_dio, clk_dio, data_dio;
-     int number;
+     int _value;
+     void writeDigits();
 };
 #endif
