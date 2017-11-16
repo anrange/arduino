@@ -25,5 +25,6 @@ class MultiLED
      
   private:
      int latch_dio, clk_dio, data_dio;
+     int number;
 };
 #endif

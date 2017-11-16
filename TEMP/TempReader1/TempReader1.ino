@@ -30,10 +30,10 @@ void loop() {
      Serial.print("\t Deg F = ");
      value = (int)ktc.readFahrenheit();
      Serial.println(value);
-     multiLED.writeNumber(value);
+     
    }
    count ++;
-   delay(500);
+   multiLED.writeNumber(value);
    
    
 }
