@@ -4,19 +4,20 @@
   https://developer.android.com/adk/index.html
   
 */
+#include"Arduino.h"
 // Defining the calues for the ultra sound sensor.
 #define TRIG 4
 #define ECHO 5
 
 //Values for the L298N Driver
 //http://howtomechatronics.com/tutorials/arduino/arduino-dc-motor-control-tutorial-l298n-pwm-h-bridge/
-#define EN1 6 
-#define M1_1 3  
-#define M1_2 7
+#define EN1 3
+#define M1_1 A5  
+#define M1_2 A4
 
 #define EN2 10
-#define M2_1 8 
-#define M2_2 9
+#define M2_1 A3
+#define M2_2 A2
 
 
 
@@ -29,8 +30,8 @@ void setup() {
   
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(TRIG, OUTPUT);
-  pinMode(ECHO, INPUT);
+//  pinMode(TRIG, OUTPUT);
+//  pinMode(ECHO, INPUT);
 
   pinMode(EN1, OUTPUT);
   pinMode(EN2, OUTPUT);
@@ -154,9 +155,9 @@ int readCommandMotor(){
 void loop() {
   
   
-  digitalWrite(TRIG, LOW);
-  digitalWrite(EN1, LOW);
-  digitalWrite(EN2, LOW);
+//  digitalWrite(TRIG, LOW);
+//  digitalWrite(EN1, LOW);
+//  digitalWrite(EN2, LOW);
 
   Serial.println("Motor V1");
   delay(100);
