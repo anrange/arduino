@@ -50,7 +50,7 @@ void loop() {
   Serial.print(" , Y:");
   Serial.println(joystick.posy);
   sendData();
-  delay(1000); 
+  delay(100); 
   
 }
 
