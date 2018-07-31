@@ -7,8 +7,8 @@
 #define CSN_PIN 10
 
 #define EN1 3                                   
-#define DIRA_1 2
-#define DIRA_2 4
+#define DIRA_1 4
+#define DIRA_2 2
 
 #define EN2 6
 #define DIRB_1 7

@@ -58,8 +58,8 @@ void DualMotor::move(int _x, int _y){
     return;
   }
 
-  if (x >LOWRANGE && x < HIGHRANGE){
-    //x is stop
+  if (x > LOWRANGE && x < HIGHRANGE){
+    //x is in the "ignore" range
     if (y <= LOWRANGE){
       moveFwd();
       Serial.println("FWD");     
@@ -71,27 +71,27 @@ void DualMotor::move(int _x, int _y){
     return;
   }
 
-  if (y >LOWRANGE && y < HIGHRANGE){
-    //y is stop (left or right
+  if (y > LOWRANGE && y < HIGHRANGE){
+    //y is in the "ignore range" , need to move (left or right)
     if (x <= LOWRANGE){
       rotateRight();
-      Serial.println("RIGHT");
+      Serial.println("RRIGHT");
     }
     else{
       rotateLeft();
-      Serial.println("LEFT");
+      Serial.println("RLEFT");
     }
   }
   else{
 //both are in the range
      //move them in place
      if (x <= LOWRANGE){
-          moveLeft();
-          Serial.println("LEFT");
+          rotateRight();
+          Serial.println("RRIGHT");
      }
      else{
-        moveRight();
-        Serial.println("RIGHT");
+        rotateLeft();
+        Serial.println("RLEFT");
      }     
  }
 }

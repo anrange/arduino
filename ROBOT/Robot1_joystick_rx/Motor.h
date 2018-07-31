@@ -18,7 +18,7 @@
 #define LEFT 3
 #define RIGHT 4
 #define LOWRANGE 300
-#define HIGHRANGE 700
+#define HIGHRANGE 600
 
 class DualMotor
 {
