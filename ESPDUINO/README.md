@@ -11,7 +11,7 @@ These steps are taken from: https://arduino-esp8266.readthedocs.io/en/latest/
 Go to: https://arduino-esp8266.readthedocs.io/en/latest/installing.html
 
 The "Boards manager" setup didn't work. You need to follow the "git" setup:
-# Go to a directory:
+- Go to a directory:
 $ cd hardware
 $ mkdir esp8266com
 $ cd esp8266com
