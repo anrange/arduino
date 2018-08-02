@@ -10,18 +10,23 @@ These steps are taken from: https://arduino-esp8266.readthedocs.io/en/latest/
 
 Go to: https://arduino-esp8266.readthedocs.io/en/latest/installing.html
 
+The "Boards manager" setup didn't work. You need to follow the "git" setup:
+# Go to a directory:
+$ cd hardware
+$ mkdir esp8266com
+$ cd esp8266com
+$ git clone https://github.com/esp8266/Arduino.git esp8266
 
-Start Arduino and open Preferences window.
-Enter http://arduino.esp8266.com/stable/package_esp8266com_index.json into Additional Board Manager URLs field. You can add multiple URLs, separating them with commas.
-Open Boards Manager from Tools > Board menu and find esp8266 platform.
-Select the version you need from a drop-down box.
-Click install button.
-Don’t forget to select your ESP8266 board from Tools > Board menu after installation.
+$ mv or cp this folder to the hardware path in Mac. The path on my machine was:
+$ cp -R esp8266com ~/Library/Arduino15/packages/esp8266/hardware/
+If you have an error about ssl.SSLError: [SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version then you must update openssl and or python. To do so do this:
+ 
+$ brew update
+$ brew upgrade openssl
+$ brew upgrade python
 
 ### Running the app
-
-* Don't use pin 6-11.
-* Select "Generic ESP2866" for the boards I have
+* Select Espduino (Esp-13)
 
 
 
@@ -31,10 +36,10 @@ First example is blink_led
 
 
 
-#Arduino Uno WIFI 
+##Arduino Uno WIFI 
 
-##Description:
- 
+###Description:
+Cloned to the WeMos UNO+ESP8266 board 
 Full integration on one board: Uno R3 ATmega 328 and WiFi ESP8266 with memory 32Mb (MegaByte). All of the modules can work together or each separately. And everyone has their own pinout headers.
 The convenient solution for the development of new projects requiring Uno and WiFi.
 Via USB you can update sketches and firmvare for ATmega328 and for ESP8266. For this on board have the USB-serial converter CH340G.
@@ -55,13 +60,17 @@ USB<->ESP8266 (communication)	OFF	OFF	OFF	OFF	ON	ON	OFF
 All independent					OFF	OFF	OFF	OFF	OFF	OFF	OFF
 
 
-##Package included:
+###Package included:
 
 1 x UNO+WiFi R3 ATmega328P+ESP8266 Board 32Mb Memory
 
 
-##URL to buy it
+###URL to buy it
 https://www.banggood.com/UNOWiFi-R3-ATmega328PESP8266-Board-32Mb-Memory-USB-TTL-CH340G-Compatible-For-Arduino-Uno-p-1193957.html?gmcCountry=US&currency=USD&createTmp=1&utm_source=googleshopping&utm_medium=cpc_elc&utm_content=zouzou&utm_campaign=pla-brand-elc2-us&gclid=CjwKCAjwkYDbBRB6EiwAR0T_-sd-pPklOzU_4FxlE3oySezq4UHbnmcSYn74UGiDoSdRAK3lR6e7JRoC1okQAvD_BwE&cur_warehouse=CN
+
+
+##Links
+https://www.arduino.cc/en/Guide/ArduinoUnoWiFi#toc12
 
 
 ## Acknowledgments
