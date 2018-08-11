@@ -7,19 +7,26 @@
 #include <ESP8266WiFi.h>
 #include "SH1106.h"
 
+//pin out
 #define LEFT_MOTOR_PIN1 0
 #define LEFT_MOTOR_PIN2 2
 #define RIGHT_MOTOR_PIN1 4
 #define RIGHT_MOTOR_PIN2 5
+#define PUSH_BUTTON 13
+#define LED_SDA 3
+#define LED_SCL 1
+//
 
 const char* ssid = NULL; // replace NULL with "SSID";
 const char* password = NULL; // replace NULL with "password";
 
+#define IP_RETURN 5
+#define ERROR_RETURN -1
 // Create an instance of the server
 // specify the port to listen on as an argument
 WiFiServer server(8080);
 
-SH1106Wire display(0x3c, 3, 1);
+SH1106Wire display(0x3c, LED_SDA, LED_SCL);
 
 void setup() {
   Serial.begin(115200);
@@ -30,6 +37,7 @@ void setup() {
   pinMode(LEFT_MOTOR_PIN2, OUTPUT);
   pinMode(RIGHT_MOTOR_PIN1, OUTPUT);
   pinMode(RIGHT_MOTOR_PIN2, OUTPUT);
+  pinMode(PUSH_BUTTON, INPUT);
   stop();
 
   // Connect to WiFi network
@@ -76,11 +84,17 @@ void setup() {
 }
 
 void loop() {
+  int push = digitalRead(PUSH_BUTTON);
+    if (push == HIGH){
+      printIP();
+    }
   // Check if a client has connected
   WiFiClient client = server.available();
   if (!client) {
     return;
   }
+
+  
 
   // Wait until the client sends some data
   Serial.println("new client");
@@ -92,9 +106,9 @@ void loop() {
   String req = client.readStringUntil('\r');
   Serial.println(req);
   client.flush();
-
+  
   // Match the request
-  int val = -1;
+  int val = ERROR_RETURN;
   if (req.indexOf("/stop") != -1) {
     val = stop();
   } else if (req.indexOf("/forward") != -1) {
@@ -105,18 +119,23 @@ void loop() {
     val = right();
   } else if (req.indexOf("/left") != -1) {
     val = left();
+  } else if (req.indexOf("/ip") != -1) {
+    val = printIP();  
   } else {
     Serial.println("invalid request");
     client.stop();
-    return;
+    printToDisplay("invalid request");
+    
   }
-
+  if (val != IP_RETURN && val != ERROR_RETURN){
+    printToDisplay(req);
+  }
 
   client.flush();
 
   // Prepare the response
   String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n";
-  s += (val == 0) ? "success" : "failure";
+  s += (val == 0 || val == IP_RETURN) ? "success" : "failure";
   s += "</html>\n";
 
   // Send the response to the client
@@ -174,5 +193,11 @@ void printToDisplay(String text) {
     display.setFont(ArialMT_Plain_10);
     display.drawString(0, 0, text);
     display.display();
+}
+
+int printIP(){
+  IPAddress ip = WiFi.localIP();
+  printToDisplay("IP:" + ip.toString());
+  return IP_RETURN;
 }
 
