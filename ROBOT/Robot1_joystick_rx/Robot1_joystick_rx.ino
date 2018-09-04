@@ -3,19 +3,19 @@
 #include "RxRf.h"
 #include "UltraSound.h"
 
-#define CE_PIN 9
-#define CSN_PIN 10
+#define CE_PIN 9   //White
+#define CSN_PIN 10 // Blue
 
-#define EN1 3                                   
-#define DIRA_1 4
-#define DIRA_2 2
+#define EN1 3    // Orange                                
+#define DIRA_1 4 // Blue
+#define DIRA_2 2 // Yellow
 
-#define EN2 6
-#define DIRB_1 7
-#define DIRB_2 8
+#define EN2 6    //Red
+#define DIRB_1 7 //White
+#define DIRB_2 8 //Green
 
-#define TRIGGER_PIN 1
-#define ECHO_PIN 5
+#define TRIGGER_PIN 1 // Orange
+#define ECHO_PIN 5    // Blue
 
 RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
 char ackData[10] = "123456789"; // to hold the two values coming from the slave
