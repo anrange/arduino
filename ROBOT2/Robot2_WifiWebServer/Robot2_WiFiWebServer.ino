@@ -5,6 +5,7 @@
 */
 
 #include <ESP8266WiFi.h>
+#include <WifiCreds.h>
 #include "SH1106.h"
 
 //pin out
@@ -17,18 +18,18 @@
 #define LED_SCL 1
 //
 
-const char* ssid = NULL; // replace NULL with "SSID";
-const char* password = NULL; // replace NULL with "password";
-
 #define IP_RETURN 5
 #define ERROR_RETURN -1
 // Create an instance of the server
 // specify the port to listen on as an argument
 WiFiServer server(8080);
+//Wifi credentials stored in the eeprom
+WifiCreds creds;
 
 SH1106Wire display(0x3c, LED_SDA, LED_SCL);
 
 void setup() {
+  creds.begin();
   Serial.begin(115200);
   delay(10);
 
@@ -49,7 +50,10 @@ void setup() {
   display.init();
   display.flipScreenVertically();
 
-  if (ssid == NULL || password == NULL) {
+  //reading the credentials from the eeprom
+  creds.reload();
+
+  if (strlen(creds.ssid) < 2  || strlen(creds.password) < 2 ) {
     Serial.println("Initializing screen");
     printToDisplay("ERROR: please add wifi info");
     exit(0);
@@ -57,13 +61,13 @@ void setup() {
 
   printToDisplay("Initialized screen.");
 
-  printToDisplay("Connecting to " + String(ssid));
+  printToDisplay("Connecting to " + String(creds.ssid));
 
   Serial.print("Connecting to ");
-  Serial.println(ssid);
+  Serial.println(creds.ssid);
 
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+  WiFi.begin(creds.ssid, creds.password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
